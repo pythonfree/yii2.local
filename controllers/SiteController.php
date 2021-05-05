@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\EntryForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\mutex\FileMutex;
@@ -13,6 +14,18 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+
+    public function actionEntry()
+    {
+        $model = new EntryForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('entry-confirm', ['model' => $model]);
+        } else {
+            return $this->render('entry', ['model' => $model]);
+        }
+    }
+
 
     public function actionSay($message = 'Привет!')
     {
